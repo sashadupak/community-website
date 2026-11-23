@@ -61,7 +61,7 @@ nav a:hover{opacity:.8;text-decoration:none}nav a.on{opacity:1;border-color:var(
 .stats div{padding:22px 20px 22px 0;font-size:13px;line-height:1.4}.stats div+div{padding-left:20px;border-left:1px solid var(--sage)}.stats b{display:block;font-size:40px;font-weight:500;line-height:1.1;margin-bottom:6px}
 .sh{display:flex;align-items:baseline;gap:14px;border-top:1px solid var(--ink);padding-top:14px;margin-top:64px}.sh h2{margin:0;font-size:28px;font-weight:500;flex:1}.sh .k,.k{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.6}.sh a{font-size:14px;border-bottom:1px solid var(--ink)}
 .d{max-width:640px;margin:12px 0 28px;font-size:17px}
-.split{display:grid;grid-template-columns:7fr 9fr;gap:40px}.lead-story{display:block}
+.split{display:grid;grid-template-columns:7fr 9fr;gap:40px}.lead-story{display:block}.split>.lead-story{align-self:start;height:auto;min-height:0}
 .brief{list-style:none;margin:8px 0 0;padding:0;counter-reset:b}.brief li{counter-increment:b;border-top:1px solid var(--sage)}.brief li:first-child{border:0}
 .brief button{all:unset;cursor:pointer;display:flex;gap:14px;padding:12px 0;width:100%;box-sizing:border-box;line-height:1.4}.brief button:hover{background:var(--sand)}.brief button::before{content:counter(b);opacity:.5;width:18px}.brief small{display:block;opacity:.6;font-size:12px;margin-top:4px}
 .logos{display:flex;flex-wrap:wrap;gap:12px 36px;margin-top:20px;padding:18px 0;border-top:1px solid var(--sage);border-bottom:1px solid var(--sage);font-size:17px;opacity:.8}
