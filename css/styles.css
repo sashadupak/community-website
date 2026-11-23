@@ -169,3 +169,5 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 .mod .article-image img{display:block;width:100%;height:auto;max-height:560px;object-fit:contain;border-radius:5px}
 .mod .article-image figcaption{margin-top:8px}
 @media(max-width:800px){.feed .card.newsletter{grid-template-columns:1fr;gap:18px}.feed .card.s-medium,.feed .card.s-large{min-height:0}.feed .feed-image{max-height:none}}
+
+.lead-story .lead-cover{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:5px;margin-bottom:18px}
