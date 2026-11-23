@@ -1,0 +1,16 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "title": "Главная"
+    },
+    {
+      "path": "/#materials",
+      "title": "Все материалы"
+    },
+    {
+      "path": "/#programs",
+      "title": "Программы"
+    }
+  ]
+}
