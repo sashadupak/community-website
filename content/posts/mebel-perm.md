@@ -7,7 +7,7 @@ featured: true
 author: Редакция AI Business SPb
 format: Кейс
 topic: Retail
-cover:
+cover: assets/posts/mebel-perm/cover.jpg
 ---
 
 Текст материала — заглушка. Замените этот файл настоящим текстом и запустите `python3 build.py`.

@@ -22,7 +22,7 @@ def article_image(alt, src):
     alt_attr = html.escape(alt, quote=True)
     src_attr = html.escape(src.strip(), quote=True)
     caption = '<figcaption>%s</figcaption>' % html.escape(alt) if alt else ""
-    return '<figure class="article-image"><img src="%s" alt="%s" loading="lazy">%s</figure>' % (src_attr, alt_attr, caption)
+    return '<figure class="article-image"><img data-optional-image src="%s" alt="%s" loading="lazy">%s</figure>' % (src_attr, alt_attr, caption)
 
 
 def md(text):
@@ -68,12 +68,14 @@ def frontmatter(path):
 posts = []
 for path in glob.glob(os.path.join(ROOT, "content/posts/*.md")):
     meta, text = frontmatter(path)
+    slug = os.path.basename(path)[:-3]
     posts.append(dict(
-        slug=os.path.basename(path)[:-3], title=meta["title"], date=meta["date"],
+        slug=slug, title=meta["title"], date=meta["date"],
         accent=meta.get("accent", "").lower() in ("true", "да", "yes", "1"),
         size=SIZES.get(meta.get("size", "мини").lower(), "mini"), kind=meta.get("kind", ""),
         featured=meta.get("featured") == "true", note=meta.get("note", ""), author=meta.get("author", ""),
-        fmt=meta.get("format", ""), topic=meta.get("topic", ""), cover=meta.get("cover", ""), body=md(text)))
+        fmt=meta.get("format", ""), topic=meta.get("topic", ""),
+        cover=meta.get("cover") or "assets/posts/%s/cover.jpg" % slug, body=md(text)))
 posts.sort(key=lambda post: post["date"], reverse=True)
 with open(os.path.join(ROOT, "js/posts.js"), "w", encoding="utf-8") as output:
     output.write("window.POSTS=" + json.dumps(posts, ensure_ascii=False) + ";\n")
@@ -82,10 +84,13 @@ print(len(posts), "posts")
 cases = []
 for path in glob.glob(os.path.join(ROOT, "content/cases/*.md")):
     meta, text = frontmatter(path)
+    slug = os.path.basename(path)[:-3]
     cases.append(dict(
-        slug=os.path.basename(path)[:-3], company=meta["company"], title=meta["title"], summary=meta["summary"],
+        slug=slug, company=meta["company"], title=meta["title"], summary=meta["summary"],
         tags=[tag.strip() for tag in meta.get("tags", "").split(",") if tag.strip()],
-        order=int(meta.get("order") or 99), cover=meta.get("cover", ""), body=md(text)))
+        order=int(meta.get("order") or 99),
+        logo=meta.get("logo") or "assets/logos/%s.png" % slug,
+        cover=meta.get("cover") or "assets/hackathon/cases/%s.jpg" % slug, body=md(text)))
 cases.sort(key=lambda case: case["order"])
 with open(os.path.join(ROOT, "js/cases.js"), "w", encoding="utf-8") as output:
     output.write("window.CASES=" + json.dumps(cases, ensure_ascii=False) + ";\n")
