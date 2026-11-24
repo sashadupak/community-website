@@ -1,10 +1,9 @@
 ---
 title: История: от хакатонов к гранту 5 млн рублей — история Сергея Стаценко, основателя Chatboost
 date: 2026-05-19
-size: большая
+size: статья
 accent: да
 featured: true
-longread: true
 author: Редакция AI Business SPb
 format: История
 topic: Стартапы

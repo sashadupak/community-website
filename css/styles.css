@@ -110,7 +110,7 @@ nav a:hover{opacity:.8;text-decoration:none}nav a.on{opacity:1;border-color:var(
 .tiles3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .frame{border:1px solid var(--ink);padding:10px;background:#fff;border-radius:4px;margin-top:20px}.frame img{display:block;width:100%;height:auto}
 .rec{display:block;border-top:1px solid var(--ink);padding:20px 0 60px}.rec h3{font-size:24px;margin:6px 0 6px;font-weight:600}.rec:hover h3{opacity:.7}
-.mod .body p{margin:0 0 14px}.mod .body h3{font-size:20px;margin:22px 0 8px}.mod .body li{margin-bottom:6px}.mod img.cv{width:100%;border-radius:5px;margin-bottom:18px}
+.mod .body p{margin:0 0 14px}.mod .body .qa-question{font-size:1.07em;line-height:1.5;margin:1.55em 0 .65em}.mod .body .qa-question b{font-weight:600}.mod .body h3{font-size:20px;margin:22px 0 8px}.mod .body li{margin-bottom:6px}.mod img.cv{width:100%;border-radius:5px;margin-bottom:18px}
 @media(max-width:800px){.tiles,.two,.qs,.cols3,.tiles3,.qs4{grid-template-columns:1fr}.shots{grid-template-columns:1fr 1fr}.bar2{grid-template-columns:1fr 1fr 44px}.bar2 .tr{grid-column:1/-1;order:3}}
 
 .awd{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}.awd .frame{margin:0}.awd .d{max-width:none}
@@ -170,10 +170,9 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 @media(max-width:800px){.feed .card.newsletter{grid-template-columns:1fr;gap:18px}.feed .card.s-medium,.feed .card.s-large{min-height:0}.feed .feed-image{max-height:none}}
 
 .lead-story .lead-cover{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:5px;margin-bottom:18px}
-.lead-story.longread-feature .lead-cover{aspect-ratio:4/3}
-.feed .card .feed-image.longread-cover{aspect-ratio:4/3;max-height:none}
-.longread-badge{align-self:flex-start;margin:0 0 6px}
-.lead-story .longread-badge{margin-bottom:12px}
+.lead-story.lead-article .lead-cover{width:75%;aspect-ratio:4/3;margin:0 auto 18px}
+.lead-story.lead-article h3{font-size:clamp(15px,1.8vw,21px)}
+.lead-story.lead-article .tags{margin:0 0 10px}
 
 /* Optional media: absent assets are removed in app.js. */
 .mq .logo-item{display:inline-flex;align-items:center;justify-content:center;min-width:92px;height:44px}.mq .logo-item img{display:block;max-width:140px;max-height:38px;width:auto;height:auto;object-fit:contain}.gal img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:5px}.program-photo{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:5px}.case-logo{display:block;margin:0 0 12px}.case-logo img{max-width:150px;max-height:54px;width:auto;height:auto;object-fit:contain}.case-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:5px;margin:0 0 14px}.partner-logo{min-height:54px;margin-bottom:12px;display:flex;align-items:center}.partner-logo img{max-width:180px;max-height:54px;width:auto;height:auto;object-fit:contain}.feed .card.feed-community{display:flex;grid-column:1/-1!important;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;aspect-ratio:auto!important;min-height:0;margin:0;padding:28px;background:var(--sand);border-color:var(--sand)}.feed .card.feed-community h3{font-size:24px;font-weight:500;margin:0 0 6px}.feed .card.feed-community p{margin:0}.feed .card.feed-community .jo{min-width:280px}

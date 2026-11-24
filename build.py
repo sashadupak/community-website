@@ -7,7 +7,7 @@ import os
 import re
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SIZES = {"мини": "mini", "mini": "mini", "средняя": "medium", "medium": "medium", "большая": "large", "large": "large"}
+SIZES = {"мини": "mini", "mini": "mini", "средняя": "medium", "medium": "medium", "большая": "large", "large": "large", "статья": "large"}
 IMAGE_LINE = re.compile(r"^!\[([^\]]*)\]\(([^)]+)\)$")
 
 
@@ -25,7 +25,7 @@ def article_image(alt, src):
     return '<figure class="article-image"><img data-optional-image src="%s" alt="%s" loading="lazy">%s</figure>' % (src_attr, alt_attr, caption)
 
 
-def md(text):
+def md(text, qa=False):
     out, li = [], []
 
     def flush():
@@ -48,7 +48,10 @@ def md(text):
             if line.startswith("## "):
                 out.append("<h3>%s</h3>" % inline(line[3:]))
             elif line:
-                out.append("<p>%s</p>" % inline(line))
+                if qa and line.startswith("— "):
+                    out.append('<p class="qa-question"><b>%s</b></p>' % inline(line))
+                else:
+                    out.append("<p>%s</p>" % inline(line))
         flush()
     return "".join(out)
 
@@ -74,11 +77,11 @@ for path in glob.glob(os.path.join(ROOT, "content/posts/*.md")):
     posts.append(dict(
         slug=slug, title=meta["title"], date=meta["date"],
         accent=meta.get("accent", "").lower() in ("true", "да", "yes", "1"),
-        longread=meta.get("longread", "").lower() in ("true", "да", "yes", "1"),
         size=SIZES.get(meta.get("size", "мини").lower(), "mini"), kind=meta.get("kind", ""),
         featured=meta.get("featured") == "true", note=meta.get("note", ""), author=meta.get("author", ""),
         fmt=meta.get("format", ""), topic=meta.get("topic", ""),
-        cover=meta.get("cover") or "assets/posts/%s/cover.jpg" % slug, body=md(text)))
+        cover=meta.get("cover") or "assets/posts/%s/cover.jpg" % slug,
+        body=md(text, qa=meta.get("format", "").lower().startswith("q&a"))))
 posts.sort(key=lambda post: post["date"], reverse=True)
 with open(os.path.join(ROOT, "js/posts.js"), "w", encoding="utf-8") as output:
     output.write("window.POSTS=" + json.dumps(posts, ensure_ascii=False) + ";\n")
