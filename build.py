@@ -68,10 +68,13 @@ def frontmatter(path):
 posts = []
 for path in glob.glob(os.path.join(ROOT, "content/posts/*.md")):
     meta, text = frontmatter(path)
+    if meta.get("draft", "").lower() in ("true", "yes", "да", "1"):
+        continue
     slug = os.path.basename(path)[:-3]
     posts.append(dict(
         slug=slug, title=meta["title"], date=meta["date"],
         accent=meta.get("accent", "").lower() in ("true", "да", "yes", "1"),
+        longread=meta.get("longread", "").lower() in ("true", "да", "yes", "1"),
         size=SIZES.get(meta.get("size", "мини").lower(), "mini"), kind=meta.get("kind", ""),
         featured=meta.get("featured") == "true", note=meta.get("note", ""), author=meta.get("author", ""),
         fmt=meta.get("format", ""), topic=meta.get("topic", ""),

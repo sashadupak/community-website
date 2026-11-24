@@ -4,6 +4,7 @@ date: 2026-11-20
 size: большая
 accent: да
 featured: true
+draft: true
 author: Редакция AI Business SPb
 format: Кейс
 topic: Retail
