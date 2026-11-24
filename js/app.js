@@ -8,6 +8,8 @@ function assetPath(s){if(!s)return "";s=String(s).trim();if(/^(https?:|data:|\/)
 function watchOptionalImages(root){root.querySelectorAll("img[data-optional-image]").forEach(function(img){if(img.dataset.optionalBound)return;img.dataset.optionalBound="1";img.addEventListener("error",function(){var f=img.closest("figure");if(f){f.remove();return}var g=img.closest(".optional-gallery");if(g){img.remove();if(!g.querySelector("img"))g.remove();return}var i=img.closest(".logo-item");if(i){var m=i.closest(".mq");i.remove();if(m&&!m.querySelector(".logo-item"))m.remove();return}var x=img.closest(".optional-image-group");if(x)x.remove();else img.remove()},{once:true});if(img.complete&&img.naturalWidth===0)img.dispatchEvent(new Event("error"))})}
 // Лента: размеры из файлов материалов; последний по дате пост заменён подпиской.
 var feedPosts=PS.slice(0,-1);
+// Сохраняем эту статью в общей ленте, если она оказалась последней по дате.
+if(PS.length>1&&PS[PS.length-1].slug=="hackathon-product-start")feedPosts[feedPosts.length-1]=PS[PS.length-1];
 function tg(p){return p.fmt||p.topic?'<div class="tags">'+(p.fmt?'<span class="tag">'+esc(p.fmt)+'</span>':'')+(p.topic?'<span class="tag t">'+esc(p.topic)+'</span>':'')+'</div>':''}
 function card(x){var p=x.p,photo=p.cover?'<img class="feed-image" data-optional-image src="'+attr(assetPath(p.cover))+'" alt="" loading="lazy">':'';return '<button class="card s-'+p.size+' sp'+x.s+(p.accent?' ac':'')+'" style="grid-column:span '+x.s+'" data-post="'+attr(p.slug)+'" data-from="materials">'+tg(p)+'<h3 class="serif">'+esc(p.title)+'</h3>'+photo+'</button>'}
 $("feed").innerHTML=layoutRows(feedPosts).map(function(r){return r.map(card).join("")}).join("")+

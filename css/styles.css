@@ -178,9 +178,9 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 /* Hackathon case cards and their modal details only. */
 .case-card .case-logo{min-height:54px;display:flex;align-items:center}
 .case-detail-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:start}
-.case-detail-layout:has(.case-detail-photo){grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.case-detail-photo{margin:0;align-self:start}
+.case-detail-photo{width:50%;margin:0;align-self:start}
 .case-detail-photo img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:5px}
+@media(max-width:800px){.case-detail-photo{width:100%;max-width:480px}}
 
 /* Ratings photo sits beside the scales; the optional-image handler collapses this grid if it is absent. */
 .rating-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px;align-items:start}
