@@ -146,14 +146,14 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 
 
 /* Лента: асимметричные ряды; высота карточек сохраняет разницу между типами материалов. */
-.feed{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:20px;row-gap:24px;align-items:start}
-.feed .card.s-mini,.feed .card.s-medium,.feed .card.s-large{aspect-ratio:auto!important;align-self:start;min-width:0}
+.feed{grid-template-columns:repeat(12,minmax(0,1fr));column-gap:20px;row-gap:24px;align-items:stretch}
+.feed .card.s-mini,.feed .card.s-medium,.feed .card.s-large{aspect-ratio:auto!important;align-self:stretch;min-width:0}
 .feed .card.s-mini{min-height:150px}
 .feed .card.s-medium{min-height:235px}
-.feed .card.s-large{min-height:310px;border-color:var(--ink)}
+.feed .card.s-large{min-height:310px}
 .feed .card.s-medium h3{font-size:clamp(19px,2vw,23px)}
 .feed .card.s-large h3{font-size:clamp(22px,2.4vw,28px)}
-.feed .feed-image{display:block;width:100%;aspect-ratio:16/9;max-height:240px;object-fit:cover;border-radius:5px}
+.feed .feed-image{display:block;width:100%;height:auto;aspect-ratio:auto;max-height:none;object-fit:contain;border-radius:5px}
 /* Карточка подписки занимает ту же полную строку, что и прежний завершающий материал. */
 .feed .card.newsletter{display:grid;grid-column:1/-1!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;aspect-ratio:auto!important;min-height:0;padding:24px}
 .newsletter-copy h3{font-size:clamp(22px,2.5vw,30px);margin:8px 0}
@@ -169,9 +169,9 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 .mod .article-image figcaption{margin-top:8px}
 @media(max-width:800px){.feed .card.newsletter{grid-template-columns:1fr;gap:18px}.feed .card.s-medium,.feed .card.s-large{min-height:0}.feed .feed-image{max-height:none}}
 
-.lead-story .lead-cover{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:5px;margin-bottom:18px}
+.lead-story .lead-cover{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:5px;margin-bottom:18px}
 .lead-story.lead-article{width:min(100%,400px)}
-.lead-story.lead-article .lead-cover{width:100%;aspect-ratio:4/3;margin:0 0 18px}
+.lead-story.lead-article .lead-cover{width:100%;height:auto;aspect-ratio:auto;margin:0 0 18px}
 .lead-story.lead-article h3{font-size:clamp(15px,1.8vw,21px)}
 .lead-story.lead-article .tags{margin:0 0 10px}
 
