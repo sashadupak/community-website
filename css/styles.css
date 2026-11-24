@@ -174,3 +174,18 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 /* Optional media: absent assets are removed in app.js. */
 .mq .logo-item{display:inline-flex;align-items:center;justify-content:center;min-width:92px;height:44px}.mq .logo-item img{display:block;max-width:140px;max-height:38px;width:auto;height:auto;object-fit:contain}.gal img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:5px}.program-photo{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:5px}.case-logo{display:block;margin:0 0 12px}.case-logo img{max-width:150px;max-height:54px;width:auto;height:auto;object-fit:contain}.case-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:5px;margin:0 0 14px}.partner-logo{min-height:54px;margin-bottom:12px;display:flex;align-items:center}.partner-logo img{max-width:180px;max-height:54px;width:auto;height:auto;object-fit:contain}.feed .card.feed-community{display:flex;grid-column:1/-1!important;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;aspect-ratio:auto!important;min-height:0;margin:0;padding:28px;background:var(--sand);border-color:var(--sand)}.feed .card.feed-community h3{font-size:24px;font-weight:500;margin:0 0 6px}.feed .card.feed-community p{margin:0}.feed .card.feed-community .jo{min-width:280px}
 @media(max-width:800px){.feed .card.feed-community{gap:18px;padding:22px}.feed .card.feed-community .jo{min-width:min(100%,280px)}}
+
+/* Hackathon case cards and their modal details only. */
+.case-card .case-logo{min-height:54px;display:flex;align-items:center}
+.case-detail-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:start}
+.case-detail-layout:has(.case-detail-photo){grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.case-detail-photo{margin:0;align-self:start}
+.case-detail-photo img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:5px}
+
+/* Ratings photo sits beside the scales; the optional-image handler collapses this grid if it is absent. */
+.rating-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px;align-items:start}
+.rating-layout .rates{max-width:none}
+.rating-layout:not(:has(.rating-photo)) .rates{grid-column:1/-1}
+.rating-photo{min-width:0}
+.rating-photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:5px}
+@media(max-width:800px){.case-detail-layout:has(.case-detail-photo),.rating-layout{grid-template-columns:1fr}}

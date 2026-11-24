@@ -37,7 +37,7 @@
 
 | Использование | Путь |
 | --- | --- |
-| Логотипы бегущей строки: VIZARD, Mediascope, НейроДВС, Балтийский Берег, Яндекс AI Studio, ИТ-Диалог, ГУАП | `assets/logos/vizard.png`, `mediascope.png`, `neurodvs.png`, `baltic-bereg.png`, `yandex-ai-studio.png`, `it-dialog.png`, `guap.png` |
+| Логотипы бегущей строки: VIZARD, Mediascope, НейроДВС, Балтийский Берег, Yandex AI Studio, ИТ-Диалог, ГУАП | `assets/logos/vizard.png`, `mediascope.png`, `neurodvs.png`, `baltic-bereg.png`, `yandex-ai-studio.png`, `it-dialog.png`, `guap.png` |
 | Обложка статьи про магазин мебели | `assets/posts/mebel-perm/cover.jpg` |
 | Фото в карточке хакатона (4 горизонтальных кадра) | `assets/hackathon/gallery-01.jpg` … `gallery-04.jpg` |
 | Фото-мокапы страницы хакатона | `assets/hackathon/partner-case-review.jpg`, `assets/hackathon/mentor-briefing.jpg` |

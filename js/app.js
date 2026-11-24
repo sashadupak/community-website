@@ -17,14 +17,16 @@ var feat=PS.filter(function(p){return p.featured})[0]||PS[0],lead=$("lead");lead
 $("brief").innerHTML=PS.filter(function(p){return p!==feat}).slice(0,5).map(function(p){return '<li><button data-post="'+attr(p.slug)+'" data-from="home"><span>'+esc(p.title)+'</span></button></li>'}).join("");
 $("ev").innerHTML=PS.filter(function(p){return p.kind=="event"}).slice(0,5).map(function(p){return '<button data-post="'+attr(p.slug)+'" data-from="home"><time>'+dt(p.date)+'</time><span>'+esc(p.title)+'</span><span>→</span></button>'}).join("");
 // кейсы хакатона
-$("cases").innerHTML=CS.map(function(c){return '<button class="tile" data-case="'+attr(c.slug)+'">'+(c.logo?'<span class="case-logo optional-image-group"><img data-optional-image src="'+attr(assetPath(c.logo))+'" alt="Логотип '+attr(c.company)+'" loading="lazy"></span>':'')+(c.cover?'<img class="case-photo" data-optional-image src="'+attr(assetPath(c.cover))+'" alt="Фото кейса '+attr(c.company)+'" loading="lazy">':'')+'<span class="n">'+esc(c.company)+'</span><h3 class="serif">'+esc(c.title)+'</h3><p>'+esc(c.summary)+'</p>'+c.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span> '}).join("")+'</button>'}).join("");
+$("cases").innerHTML=CS.map(function(c){return '<button class="tile case-card" data-case="'+attr(c.slug)+'">'+(c.logo?'<span class="case-logo optional-image-group"><img data-optional-image src="'+attr(assetPath(c.logo))+'" alt="Логотип '+attr(c.company)+'" loading="lazy"></span>':'')+'<h3 class="serif">'+esc(c.title)+'</h3><p>'+esc(c.summary)+'</p>'+c.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span> '}).join("")+'</button>'}).join("");
 // оверлей
 function show(html){lastF=document.activeElement;mod.innerHTML='<button class="x" aria-label="Закрыть">×</button>'+html;watchOptionalImages(mod);ov.classList.add("on");document.body.style.overflow="hidden";mod.querySelector(".x").focus()}
 function pic(c,alt){return c?'<img class="cv" data-optional-image src="'+attr(assetPath(c))+'" alt="'+attr(alt||"")+'" loading="lazy">':''}
 function openP(slug,from){var p=PS.filter(function(x){return x.slug==slug})[0];if(!p)return;
 show('<span class="dt">'+dt(p.date)+'</span>'+(from=="home"?'<button class="back" data-back>← Назад</button>':'')+pic(p.cover,p.title)+tg(p)+'<h2 class="serif">'+esc(p.title)+'</h2><div class="body">'+p.body+'</div>'+(p.author?'<p class="k">Автор: '+esc(p.author)+'</p>':''))}
 function openC(slug){var c=CS.filter(function(x){return x.slug==slug})[0];if(!c)return;
-show('<span class="k lbl">'+esc(c.company)+'</span>'+pic(c.cover,c.title)+'<h2 class="serif">'+esc(c.title)+'</h2><div class="tags">'+c.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join("")+'</div><div class="body">'+c.body+'</div>')}
+var logo=c.logo?'<span class="case-logo optional-image-group"><img data-optional-image src="'+attr(assetPath(c.logo))+'" alt="Логотип '+attr(c.company)+'" loading="lazy"></span>':'';
+var photo=c.cover?'<figure class="case-detail-photo"><img data-optional-image src="'+attr(assetPath(c.cover))+'" alt="Фото кейса '+attr(c.company)+'" loading="lazy"></figure>':'';
+show(logo+'<h2 class="serif">'+esc(c.title)+'</h2><div class="tags">'+c.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join("")+'</div><div class="case-detail-layout"><div class="body">'+c.body+'</div>'+photo+'</div>')}
 function closeP(){ov.classList.remove("on");document.body.style.overflow="";if(lastF)lastF.focus()}
 document.addEventListener("click",function(e){var c=e.target.closest("[data-post]");if(c)return openP(c.dataset.post,c.dataset.from);
 c=e.target.closest("[data-case]");if(c)return openC(c.dataset.case);
