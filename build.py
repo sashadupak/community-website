@@ -26,6 +26,18 @@ def article_image(alt, src):
     return '<figure class="article-image"><img data-optional-image src="%s" alt="%s" loading="lazy">%s</figure>' % (src_attr, alt_attr, caption)
 
 
+def first_article_image(text):
+    for line in text.splitlines():
+        image = IMAGE_LINE.match(line.strip())
+        if image:
+            return image.group(2).strip()
+    return ""
+
+
+def without_article_images(text):
+    return "\n".join(line for line in text.splitlines() if not IMAGE_LINE.match(line.strip()))
+
+
 def md(text, qa=False):
     out, li = [], []
 
@@ -120,8 +132,9 @@ for path in glob.glob(os.path.join(ROOT, "content/posts/*.md")):
     if meta.get("draft", "").lower() in ("true", "yes", "да", "1"):
         continue
     slug = os.path.basename(path)[:-3]
-    cover = meta.get("cover") or "assets/posts/%s/cover.jpg" % slug
+    cover = first_article_image(text) or meta.get("cover") or "assets/posts/%s/cover.jpg" % slug
     cover_width, cover_height = image_dimensions(cover)
+    article_text = without_article_images(text)
     posts.append(dict(
         slug=slug, title=meta["title"], date=meta["date"],
         accent=meta.get("accent", "").lower() in ("true", "да", "yes", "1"),
@@ -129,7 +142,7 @@ for path in glob.glob(os.path.join(ROOT, "content/posts/*.md")):
         featured=meta.get("featured") == "true", note=meta.get("note", ""), author=meta.get("author", ""),
         fmt=meta.get("format", ""), topic=meta.get("topic", ""),
         cover=cover, cover_width=cover_width, cover_height=cover_height,
-        body=md(text, qa=meta.get("format", "").lower().startswith("q&a"))))
+        body=md(article_text, qa=meta.get("format", "").lower().startswith("q&a"))))
 posts.sort(key=lambda post: post["date"], reverse=True)
 with open(os.path.join(ROOT, "js/posts.js"), "w", encoding="utf-8") as output:
     output.write("window.POSTS=" + json.dumps(posts, ensure_ascii=False) + ";\n")

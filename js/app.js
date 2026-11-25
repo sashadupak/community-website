@@ -14,19 +14,19 @@ if(omit>=0)feedPosts.splice(omit,1);
 function tg(p){return p.fmt||p.topic?'<div class="tags">'+(p.fmt?'<span class="tag">'+esc(p.fmt)+'</span>':'')+(p.topic?'<span class="tag t">'+esc(p.topic)+'</span>':'')+'</div>':''}
 function excerpt(body){var box=document.createElement("div");box.innerHTML=body||"";var node=box.querySelector("p")||box;var text=(node.textContent||"").replace(/\s+/g," ").trim();if(!text)return "";var limit=128;if(text.length>limit)text=text.slice(0,limit).replace(/\s+\S*$/g,"").trim();return '<p class="feed-excerpt">'+esc(text)+'…</p>'}
 function card(p){var photo=p.cover?'<img class="feed-image" data-optional-image src="'+attr(assetPath(p.cover))+'"'+imgDims(p)+' alt="" loading="lazy">':'';return '<button class="card feed-card s-'+p.size+(p.accent?' ac':'')+'" data-size="'+attr(p.size)+'" data-post="'+attr(p.slug)+'" data-from="materials">'+photo+'<h3 class="serif">'+esc(p.title)+'</h3>'+tg(p)+excerpt(p.body)+'</button>'}
-$("feed").innerHTML='<div class="feed-masonry" id="feed-masonry">'+feedPosts.map(card).join("")+'</div>'+ '<section class="card wide feed-community join"><div><h3 class="serif">Присоединяйтесь к сообществу</h3><p>Разборы проектов, анонсы событий, и другие полезные материалы</p></div><div class="jo"><a class="tg" href="https://t.me/ai_business_spb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5.400 11.800 17.200 7.200c.5-.2 1 .1.800.9l-2 9.500c-.1.700-.6.900-1.100.6l-3-2.200-1.500 1.400c-.2.200-.3.300-.6.300l.2-3.100 5.600-5c.2-.2 0-.3-.4-.1l-6.900 4.400-3-.9c-.6-.2-.6-.6.100-.9z" fill="#fff"/></svg>@ai_business_spb</a></div></section>';
-layoutMasonry($("feed-masonry"));
+$("feed").innerHTML=feedPosts.map(card).join("")+ '<section class="card wide feed-community join"><div><h3 class="serif">Присоединяйтесь к сообществу</h3><p>Разборы проектов, анонсы событий, и другие полезные материалы</p></div><div class="jo"><a class="tg" href="https://t.me/ai_business_spb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#27A7E7"/><path d="M5.400 11.800 17.200 7.200c.5-.2 1 .1.800.9l-2 9.500c-.1.700-.6.900-1.100.6l-3-2.200-1.500 1.400c-.2.200-.3.300-.6.300l.2-3.100 5.600-5c.2-.2 0-.3-.4-.1l-6.900 4.400-3-.9c-.6-.2-.6-.6.100-.9z" fill="#fff"/></svg>@ai_business_spb</a></div></section>';
+layoutEditorial($("feed"));
 // главная
 var feat=PS.filter(function(p){return p.featured})[0]||PS[0],lead=$("lead");lead.classList.toggle("lead-article",feat.size=="large");lead.dataset.post=feat.slug;lead.innerHTML=(feat.cover?'<img class="lead-cover" data-optional-image src="'+attr(assetPath(feat.cover))+'"'+imgDims(feat)+' alt="">':'')+'<h3 class="serif">'+esc(feat.title)+'</h3>'+tg(feat)+'<span class="cta">Читать →</span>';
 $("brief").innerHTML=PS.filter(function(p){return p!==feat}).slice(0,6).map(function(p){return '<li><button data-post="'+attr(p.slug)+'" data-from="home"><span>'+esc(p.title)+'</span></button></li>'}).join("");
 $("ev").innerHTML=PS.filter(function(p){return p.kind=="event"}).slice(0,5).map(function(p){return '<button data-post="'+attr(p.slug)+'" data-from="home"><time>'+dt(p.date)+'</time><span>'+esc(p.title)+'</span><span>→</span></button>'}).join("");
 // кейсы хакатона
 $("cases").innerHTML=CS.map(function(c){return '<button class="tile case-card" data-case="'+attr(c.slug)+'">'+(c.logo?'<span class="case-logo optional-image-group"><img data-optional-image src="'+attr(assetPath(c.logo))+'" alt="Логотип '+attr(c.company)+'" loading="lazy"></span>':'')+'<h3 class="serif">'+esc(c.title)+'</h3><p>'+esc(c.summary)+'</p>'+c.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span> '}).join("")+'</button>'}).join("");
-// CSS Grid packs the feed row by row; row heights follow card content instead of leaving masonry holes.
+// Editorial grid uses predefined row templates and preserves feed source order.
 // оверлей
 function show(html){lastF=document.activeElement;mod.innerHTML='<button class="x" aria-label="Закрыть">×</button>'+html;watchOptionalImages(mod);ov.classList.add("on");document.body.style.overflow="hidden";mod.querySelector(".x").focus()}
 function pic(c,alt,owner){return c?'<img class="cv" data-optional-image src="'+attr(assetPath(c))+'"'+imgDims(owner)+' alt="'+attr(alt||"")+'" loading="lazy">':''}
-function articleBody(p){var box=document.createElement("div");box.innerHTML=p.body||"";var cover=(p.cover||"").replace(/^\.\//,"");if(cover)box.querySelectorAll(".article-image img").forEach(function(img){var src=(img.getAttribute("src")||"").replace(/^\.\//,"");if(src===cover){var figure=img.closest(".article-image");if(figure)figure.remove()}});return box.innerHTML}
+function articleBody(p){var box=document.createElement("div");box.innerHTML=p.body||"";box.querySelectorAll(".article-image").forEach(function(image){image.remove()});return box.innerHTML}
 function openP(slug,from){var p=PS.filter(function(x){return x.slug==slug})[0];if(!p)return;
 var title='<h2 class="serif">'+esc(p.title)+'</h2>',tags=tg(p),heading=p.slug=="hackathon-product-start"?title+tags:tags+title;
 show('<span class="dt">'+dt(p.date)+'</span>'+(from=="home"?'<button class="back" data-back>← Назад</button>':'')+pic(p.cover,p.title,p)+heading+'<div class="body">'+articleBody(p)+'</div>'+(p.author?'<p class="k">Автор: '+esc(p.author)+'</p>':''))}
@@ -48,7 +48,7 @@ function route(){var h=location.hash.slice(1),pg=(h=="materials"||h=="programs")
 sy[cur]=window.scrollY;cur=pg;
 document.querySelectorAll(".pg").forEach(function(e){e.classList.toggle("on",e.id==pg)});
 document.querySelectorAll("nav a").forEach(function(a){a.classList.toggle("on",a.dataset.p==(pg=="programs"?"home":pg))});
-if(pg=="materials")scheduleMasonry($("feed-masonry"));
+if(pg=="materials")scheduleEditorialLayout($("feed"));
 window.scrollTo(0,pg==="programs"?0:(sy[pg]||0))}
 watchOptionalImages(document);
 window.addEventListener("hashchange",route);route();

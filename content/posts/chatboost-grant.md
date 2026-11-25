@@ -7,7 +7,7 @@ featured: true
 author: Редакция AI Business SPb
 format: История
 topic: Стартапы
-cover: assets/posts/chatboost-grant/cover.png
+cover: assets/posts/chatboost-grant/telegram-01.jpg
 ---
 
 
@@ -64,7 +64,7 @@ cover: assets/posts/chatboost-grant/cover.png
 ## Продукт
 
 ChatBoost – это умная система на базе передовых ИИ-моделей (GPT), которая работает как полноценный сотрудник прямо в вашей CRM, выполняя задачи первой линии продаж и поддержки.
-Сайт: chatboost.ru
+Сайт проекта: [перейти на сайт](https://go.ai-business-spb.ru/chatboost)
 
 ![](assets/posts/chatboost-grant/telegram-01.jpg)
 
