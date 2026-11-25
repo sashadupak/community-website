@@ -125,7 +125,7 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 
 .feed .card.sq{aspect-ratio:1/1.1}.feed .card.rc{aspect-ratio:1.25/1}
 .feed .card.big .ph{flex:1;min-height:80px;aspect-ratio:auto}
-.feed .card h3{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.feed .card h3{display:-webkit-box;-webkit-line-clamp:6;line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
 .feed .card.wide{aspect-ratio:auto!important}.feed .card.wide .tags{order:2}
 .mod .tags{margin:0 0 12px}
 @media(max-width:800px){.feed .card{aspect-ratio:auto!important}}
@@ -293,4 +293,36 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
   .feed{grid-template-columns:repeat(12,minmax(0,1fr))}
   .feed .card.s-mini:not(.feed-community),.feed .card.s-medium:not(.feed-community){grid-column:span 6!important}
   .feed .card.s-large:not(.feed-community),.feed .card.s-xl{grid-column:1/-1!important}
+}
+
+
+/* Materials feed: compact masonry cards; hackathon case cards remain outside this scope. */
+#materials .feed{display:block!important;margin-bottom:80px}
+#materials .feed-masonry{position:relative;width:100%;min-height:0;margin:0}
+#materials .feed-masonry>.feed-card{position:absolute;display:flex;flex-direction:column;align-items:stretch;gap:10px;min-width:0;min-height:0;height:auto;padding:16px;aspect-ratio:auto!important}
+#materials .feed-masonry>.feed-card .feed-image{display:block;order:0;width:100%;height:auto;max-height:260px;aspect-ratio:auto;object-fit:contain;margin:0;border-radius:5px}
+#materials .feed-masonry>.feed-card h3{order:1;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden;margin:0;font-size:clamp(17px,1.8vw,22px);line-height:1.25}
+#materials .feed-masonry>.feed-card .tags{order:2;margin:0}
+#materials .feed-masonry>.feed-card .feed-excerpt{order:3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;margin:0;font-size:14px;line-height:1.48;opacity:.78}
+#materials .feed-masonry>.feed-card.s-mini{padding:14px;gap:8px}
+#materials .feed-masonry>.feed-card.s-mini h3{font-size:clamp(16px,1.55vw,19px);-webkit-line-clamp:3;line-clamp:3}
+#materials .feed-masonry>.feed-card.s-mini .feed-image{max-height:190px}
+#materials .feed-masonry>.feed-card.s-mini .feed-excerpt{-webkit-line-clamp:2;line-clamp:2;font-size:13px}
+#materials .feed-masonry>.feed-card.s-medium .feed-image{max-height:225px}
+#materials .feed-masonry>.feed-card.s-large{padding:18px;gap:10px}
+#materials .feed-masonry>.feed-card.s-large h3{font-size:clamp(20px,2vw,24px)}
+#materials .feed-masonry>.feed-card.s-large .feed-image{max-height:250px}
+#materials .feed-masonry>.feed-card.s-large .feed-excerpt{font-size:14px}
+#materials .feed-community{position:relative;display:flex;grid-column:auto!important;width:100%;margin:24px 0 0!important}
+@media(max-width:767px){
+  #materials .feed-masonry>.feed-card{padding:12px;gap:8px}
+  #materials .feed-masonry>.feed-card.s-mini{padding:11px;gap:7px}
+  #materials .feed-masonry>.feed-card h3{font-size:16px;-webkit-line-clamp:3;line-clamp:3}
+  #materials .feed-masonry>.feed-card.s-mini h3{font-size:15px}
+  #materials .feed-masonry>.feed-card.s-large h3{font-size:18px}
+  #materials .feed-masonry>.feed-card .feed-excerpt{font-size:12px;-webkit-line-clamp:3;line-clamp:3}
+  #materials .feed-masonry>.feed-card.s-mini .feed-excerpt{font-size:11px;-webkit-line-clamp:2;line-clamp:2}
+  #materials .feed-masonry>.feed-card .feed-image{max-height:180px}
+  #materials .feed-masonry>.feed-card.s-large .feed-image{max-height:190px}
+  #materials .feed-community{margin-top:18px!important}
 }
