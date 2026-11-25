@@ -275,37 +275,38 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 .feed .card.s-mini,.feed .card.s-medium,.feed .card.s-large{min-height:0}
 
 
-/* Final materials editorial grid: fixed row templates, standard gutters, no absolute masonry. */
-#materials #feed{display:grid!important;grid-template-columns:repeat(20,minmax(0,1fr));grid-auto-flow:row;align-items:stretch;column-gap:20px;row-gap:20px;width:100%;margin:0 0 80px}
-#materials #feed>.feed-card{position:relative!important;display:flex;flex-direction:column;align-items:stretch;gap:10px;min-width:0;min-height:0;width:auto!important;height:auto!important;margin:0;padding:16px;aspect-ratio:auto!important}
-#materials #feed>.feed-card .feed-image{display:block;order:0;width:100%;height:auto;max-height:245px;aspect-ratio:auto;object-fit:contain;margin:0;border-radius:5px}
-#materials #feed>.feed-card h3{order:1;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden;margin:0;font-size:clamp(17px,1.7vw,22px);line-height:1.25}
-#materials #feed>.feed-card .tags{order:2;margin:0}
-#materials #feed>.feed-card .feed-excerpt{order:3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;margin:0;font-size:14px;line-height:1.48;opacity:.78}
-#materials #feed>.feed-card.s-mini{padding:14px;gap:8px}
-#materials #feed>.feed-card.s-mini h3{font-size:clamp(16px,1.5vw,19px);-webkit-line-clamp:3;line-clamp:3}
-#materials #feed>.feed-card.s-mini .feed-image{max-height:190px}
-#materials #feed>.feed-card.s-mini .feed-excerpt{-webkit-line-clamp:2;line-clamp:2;font-size:13px}
-#materials #feed>.feed-card.s-large{padding:18px;gap:10px}
-#materials #feed>.feed-card.s-large h3{font-size:clamp(20px,2vw,24px)}
-#materials #feed>.feed-card.s-large .feed-image{max-height:245px}
-#materials #feed>.feed-community{position:relative;display:flex;grid-column:1/-1!important;width:100%;margin:16px 0 0!important}
-@media(min-width:768px) and (max-width:1024px){
-  #materials #feed{grid-template-columns:repeat(20,minmax(0,1fr));column-gap:16px;row-gap:16px}
-  #materials #feed>.feed-card{padding:14px;gap:9px}
-  #materials #feed>.feed-card .feed-image{max-height:220px}
-  #materials #feed>.feed-card.s-large .feed-image{max-height:220px}
-}
+/* Materials feed masonry: equal card widths, variable content heights, zero inter-card holes. */
+#materials #feed{display:block!important;position:relative!important;width:100%;min-height:0;margin:0 0 80px}
+#materials #feed>.feed-card{position:absolute!important;display:flex;flex-direction:column;align-items:stretch;gap:9px;box-sizing:border-box;min-width:0;min-height:0;height:auto!important;margin:0;padding:15px;aspect-ratio:auto!important}
+#materials #feed>.feed-card h3{order:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden;margin:0;font-size:clamp(17px,1.45vw,20px);line-height:1.26}
+#materials #feed>.feed-card .tags{order:1;margin:0}
+#materials #feed>.feed-card .feed-excerpt{order:2;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;margin:0;font-size:13px;line-height:1.48;opacity:.78}
+#materials #feed>.feed-card.s-mini{min-height:128px;padding:14px;gap:8px}
+#materials #feed>.feed-card.s-mini h3{-webkit-line-clamp:4;line-clamp:4;font-size:clamp(16px,1.35vw,18px)}
+#materials #feed>.feed-card.s-mini .feed-excerpt{-webkit-line-clamp:2;line-clamp:2;font-size:12px}
+#materials #feed>.feed-card.s-medium{min-height:184px;padding:16px}
+#materials #feed>.feed-card.s-medium h3{-webkit-line-clamp:5;line-clamp:5;font-size:clamp(18px,1.55vw,21px)}
+#materials #feed>.feed-card.s-medium .feed-excerpt{-webkit-line-clamp:3;line-clamp:3}
+#materials #feed>.feed-card.s-large{min-height:248px;padding:18px;gap:10px}
+#materials #feed>.feed-card.s-large h3{-webkit-line-clamp:6;line-clamp:6;font-size:clamp(20px,1.9vw,25px)}
+#materials #feed>.feed-card.s-large .feed-excerpt{-webkit-line-clamp:5;line-clamp:5;font-size:14px}
+#materials #feed>.feed-community{position:absolute!important;left:0;top:0;display:flex;grid-column:auto!important;width:100%;margin:0!important}
+.mod .body blockquote{margin:20px 0;padding:12px 18px;border-left:3px solid var(--ink);background:rgba(217,226,220,.45);font-family:var(--fh);font-style:italic}
+.mod .body blockquote p{margin:0 0 8px}
+.mod .body blockquote p:last-child{margin-bottom:0}
+.mod .body h4{font-size:17px;line-height:1.35;font-weight:600;margin:18px 0 8px}
+@media(min-width:768px) and (max-width:1024px){#materials #feed{margin-bottom:56px}#materials #feed>.feed-card{padding:14px}}
 @media(max-width:767px){
-  #materials #feed{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;row-gap:12px;margin-bottom:48px}
-  #materials #feed>.feed-card{padding:12px;gap:8px}
-  #materials #feed>.feed-card.s-mini{padding:11px;gap:7px}
-  #materials #feed>.feed-card h3{font-size:16px;-webkit-line-clamp:3;line-clamp:3}
-  #materials #feed>.feed-card.s-mini h3{font-size:15px}
-  #materials #feed>.feed-card.s-large h3{font-size:18px}
-  #materials #feed>.feed-card .feed-excerpt{font-size:12px;-webkit-line-clamp:3;line-clamp:3}
-  #materials #feed>.feed-card.s-mini .feed-excerpt{font-size:11px;-webkit-line-clamp:2;line-clamp:2}
-  #materials #feed>.feed-card .feed-image{max-height:180px}
-  #materials #feed>.feed-card.s-large .feed-image{max-height:190px}
-  #materials #feed>.feed-community{margin-top:14px!important}
+  #materials #feed{margin-bottom:48px}
+  #materials #feed>.feed-card{gap:7px;padding:11px}
+  #materials #feed>.feed-card.s-mini{min-height:118px;padding:10px}
+  #materials #feed>.feed-card.s-medium{min-height:160px;padding:12px}
+  #materials #feed>.feed-card.s-large{min-height:208px;padding:13px}
+  #materials #feed>.feed-card h3{font-size:15px;-webkit-line-clamp:5;line-clamp:5}
+  #materials #feed>.feed-card.s-mini h3{font-size:14px}
+  #materials #feed>.feed-card.s-large h3{font-size:17px}
+  #materials #feed>.feed-card .feed-excerpt{font-size:11px;-webkit-line-clamp:3;line-clamp:3}
+  #materials #feed>.feed-card.s-large .feed-excerpt{-webkit-line-clamp:4;line-clamp:4}
+  #materials #feed>.feed-community{display:flex;flex-direction:column;align-items:stretch;gap:14px;padding:20px}
+  #materials #feed>.feed-community .jo{width:100%;min-width:0}
 }

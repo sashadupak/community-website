@@ -15,15 +15,16 @@ cover:
 
 Anthropic предложила добавлять к каждому фрагменту краткое описание его контекста, сформированное языковой моделью на основе исходного документа.
 
-**Что показали эксперименты?**
+### Что показали эксперименты?
 
 Исследователи проверили подход на разных типах данных: кодовых базах, художественных текстах и научных публикациях. Качество оценивали по Recall@20 — способности находить релевантные фрагменты среди первых 20 результатов.
 
 Доля неудачных извлечений составила:
-**⏺**Обычный поиск — 5,7%.
-**⏺**Contextual Embeddings — 3,7% (снижение на 35%).
-**⏺**Contextual Embeddings + BM25 — 2,9% (снижение на 49%).
-**⏺**Contextual Retrieval + Reranking — 1,9% (снижение на 67%).
+
+- Обычный поиск — 5,7%.
+- Contextual Embeddings — 3,7% (снижение на 35%).
+- Contextual Embeddings + BM25 — 2,9% (снижение на 49%).
+- Contextual Retrieval + Reranking — 1,9% (снижение на 67%).
 
 В последнем варианте система сначала находила 150 потенциально релевантных фрагментов, а затем reranker отбирал 20 наиболее подходящих.
 
@@ -31,6 +32,7 @@ Anthropic предложила добавлять к каждому фрагме
 
 При этом за повышение точности приходится платить: контекстуализация увеличивает затраты на обработку и хранение, а reranking добавляет вычислительную нагрузку и задержку.
 
-**Материалы, которые помогут построить RAG и улучшить retrieval:**
-**➖**[Implementing RAG: A Hands-on Guide](https://generativeai.pub/implementing-retrieval-augmented-generation-rag-a-hands-on-guide-aefa061b2dcc?utm_source=chatgpt.com) — создание RAG с нуля на практическом примере.
-**➖**[Better Context for your RAG with Contextual Retrieval](https://mlexpert.io/blog/rag-contextual-retrieval?utm_source=chatgpt.com) — реализация Contextual Retrieval для повышения точности поиска.
+### Материалы, которые помогут построить RAG и улучшить retrieval
+
+- [Implementing RAG: A Hands-on Guide](https://generativeai.pub/implementing-retrieval-augmented-generation-rag-a-hands-on-guide-aefa061b2dcc?utm_source=chatgpt.com) — создание RAG с нуля на практическом примере.
+- [Better Context for your RAG with Contextual Retrieval](https://mlexpert.io/blog/rag-contextual-retrieval?utm_source=chatgpt.com) — реализация Contextual Retrieval для повышения точности поиска.

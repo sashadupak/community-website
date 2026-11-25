@@ -1,102 +1,57 @@
-/* Predictable editorial grid: fixed row patterns, original feed order, equal gaps, no skyline packing. */
-var EDITORIAL_GRID={
-  desktop:{columns:20,gap:20,duo:[12,8],trio:[6,8,6]},
-  tablet:{columns:20,gap:16,duo:[12,8],trio:[6,8,6]},
-  phone:{columns:2,gap:12}
-};
-function editorialConfig(width){
-  if(width<=767)return EDITORIAL_GRID.phone;
-  if(width<=1024)return EDITORIAL_GRID.tablet;
-  return EDITORIAL_GRID.desktop;
+/* Equal-width masonry cards: three desktop columns and two compact columns on smaller screens. */
+function masonryConfig(viewportWidth){
+  if(viewportWidth<=767)return {columns:2,gap:12};
+  if(viewportWidth<=900)return {columns:2,gap:16};
+  return {columns:3,gap:viewportWidth<=1024?16:20};
 }
-function scheduleEditorialLayout(container){
-  if(!container||container.dataset.editorialScheduled)return;
-  container.dataset.editorialScheduled="1";
+function scheduleMasonry(container){
+  if(!container||container.dataset.masonryScheduled)return;
+  container.dataset.masonryScheduled="1";
   requestAnimationFrame(function(){
-    container.dataset.editorialScheduled="";
-    layoutEditorial(container);
+    container.dataset.masonryScheduled="";
+    layoutMasonry(container);
   });
 }
-function setEditorialSpan(card,span){
-  card.style.setProperty("grid-column","span "+span,"important");
-}
-function layoutEditorial(container){
+function layoutMasonry(container){
   if(!container)return;
   var width=container.getBoundingClientRect().width;
   if(width<1)return;
-  var config=editorialConfig(window.innerWidth||document.documentElement.clientWidth);
-  var columns=config.columns;
+  var viewport=window.innerWidth||document.documentElement.clientWidth;
+  var config=masonryConfig(viewport),columns=config.columns,gap=config.gap;
   var cards=Array.prototype.slice.call(container.querySelectorAll(":scope > .feed-card"));
-  container.style.display="grid";
-  container.style.gridTemplateColumns="repeat("+columns+",minmax(0,1fr))";
-  container.style.gridAutoFlow="row";
-  container.style.columnGap=config.gap+"px";
-  container.style.rowGap=config.gap+"px";
-
-  if(columns===2){
-    var mobileIndex=0;
-    while(mobileIndex<cards.length){
-      var mobileSize=cards[mobileIndex].dataset.size||"mini";
-      if(mobileSize==="large"||mobileSize==="xl"){
-        setEditorialSpan(cards[mobileIndex],2);
-        mobileIndex++;
-      }else if(mobileIndex+1<cards.length){
-        var nextSize=cards[mobileIndex+1].dataset.size||"mini";
-        if(nextSize!=="large"&&nextSize!=="xl"){
-          setEditorialSpan(cards[mobileIndex],1);
-          setEditorialSpan(cards[mobileIndex+1],1);
-          mobileIndex+=2;
-        }else{
-          setEditorialSpan(cards[mobileIndex],2);
-          mobileIndex++;
-        }
-      }else{
-        setEditorialSpan(cards[mobileIndex],2);
-        mobileIndex++;
-      }
-    }
-  }else{
-    var index=0,pattern=0;
-    while(index<cards.length){
-      var first=cards[index],firstSize=first.dataset.size||"mini";
-      if(firstSize==="xl"){
-        setEditorialSpan(first,columns);
-        index++;
-        continue;
-      }
-      var available=0;
-      while(index+available<cards.length&&available<3&&(cards[index+available].dataset.size||"mini")!=="xl")available++;
-      var hasLarge=false;
-      for(var look=0;look<available;look++)if((cards[index+look].dataset.size||"mini")==="large")hasLarge=true;
-      var count=(hasLarge||available<3)?Math.min(2,available):3;
-      if(count===1){
-        setEditorialSpan(first,columns);
-        index++;
-        pattern++;
-        continue;
-      }
-      if(count===2){
-        var pair=config.duo.slice();
-        var largeAt=-1;
-        for(var p=0;p<count;p++)if((cards[index+p].dataset.size||"mini")==="large"){largeAt=p;break}
-        var mediumAt=-1;
-        for(var m=0;m<count;m++)if((cards[index+m].dataset.size||"mini")==="medium"){mediumAt=m;break}
-        var wideAt=largeAt>=0?largeAt:(mediumAt>=0?1-mediumAt:pattern%2);
-        setEditorialSpan(cards[index+wideAt],pair[0]);
-        setEditorialSpan(cards[index+(1-wideAt)],pair[1]);
-      }else{
-        var trio=config.trio;
-        var mediumIndex=-1;
-        for(var t=0;t<3;t++)if((cards[index+t].dataset.size||"mini")==="medium"){mediumIndex=t;break}
-        var otherSpans=[trio[0],trio[2]],otherIndex=0;
-        for(var t=0;t<3;t++)setEditorialSpan(cards[index+t],mediumIndex<0?trio[t]:(t===mediumIndex?trio[1]:otherSpans[otherIndex++]));
-      }
-      index+=count;
-      pattern++;
-    }
+  var community=container.querySelector(":scope > .feed-community");
+  var cardWidth=(width-gap*(columns-1))/columns;
+  var bottoms=new Array(columns).fill(0);
+  container.style.display="block";
+  container.style.position="relative";
+  cards.forEach(function(card){
+    card.style.setProperty("position","absolute","important");
+    card.style.setProperty("width",cardWidth+"px","important");
+    card.style.left="0px";
+    card.style.top="0px";
+    card.style.gridColumn="auto";
+    var column=0;
+    for(var i=1;i<columns;i++)if(bottoms[i]<bottoms[column])column=i;
+    var height=card.getBoundingClientRect().height;
+    card.style.left=(column*(cardWidth+gap))+"px";
+    card.style.top=bottoms[column]+"px";
+    bottoms[column]+=height+gap;
+  });
+  var cardsHeight=cards.length?Math.max.apply(null,bottoms)-gap:0;
+  if(community){
+    community.style.position="absolute";
+    community.style.left="0";
+    community.style.top=(cardsHeight?cardsHeight+gap:0)+"px";
+    community.style.width="100%";
+    var communityHeight=community.getBoundingClientRect().height;
+    container.style.height=(cardsHeight+(cardsHeight?gap:0)+communityHeight)+"px";
+  }else container.style.height=cardsHeight+"px";
+  if(!container.dataset.masonryResizeBound){
+    container.dataset.masonryResizeBound="1";
+    window.addEventListener("resize",function(){scheduleMasonry(container)},{passive:true});
   }
-  if(!container.dataset.editorialResizeBound){
-    container.dataset.editorialResizeBound="1";
-    window.addEventListener("resize",function(){scheduleEditorialLayout(container)},{passive:true});
+  if(!container.dataset.masonryFontBound&&document.fonts&&document.fonts.ready){
+    container.dataset.masonryFontBound="1";
+    document.fonts.ready.then(function(){scheduleMasonry(container)});
   }
 }

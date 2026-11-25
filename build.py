@@ -15,6 +15,7 @@ IMAGE_LINE = re.compile(r"^!\[([^\]]*)\]\(([^)]+)\)$")
 def inline(text):
     text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
+    text = re.sub(r"(?<!\*)\*(?!\s)(.+?)(?<!\s)\*(?!\*)", r"<i>\1</i>", text)
     text = re.sub(r"`(.+?)`", r"<code>\1</code>", text)
     return re.sub(r"\[(.+?)\]\((.+?)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', text)
 
@@ -39,27 +40,43 @@ def without_article_images(text):
 
 
 def md(text, qa=False):
-    out, li = [], []
+    out, li, list_tag = [], [], ["ul"]
 
     def flush():
         if li:
-            out.append("<ul>" + "".join("<li>%s</li>" % inline(x) for x in li) + "</ul>")
+            tag = list_tag[0]
+            out.append("<%s>" % tag + "".join("<li>%s</li>" % inline(x) for x in li) + "</%s>" % tag)
             li.clear()
+            list_tag[0] = "ul"
 
     for block in re.split(r"\n\s*\n", text.strip()):
-        for line in block.split("\n"):
+        lines = block.split("\n")
+        if lines and all(line.strip().startswith(">") for line in lines):
+            flush()
+            quoted = " ".join(line.strip()[1:].strip() for line in lines)
+            out.append("<blockquote><p>%s</p></blockquote>" % inline(quoted))
+            continue
+        for line in lines:
             line = line.strip()
             image = IMAGE_LINE.match(line)
             if image:
                 flush()
                 out.append(article_image(image.group(1), image.group(2)))
                 continue
-            if line.startswith("- "):
-                li.append(line[2:])
+            ordered = re.match(r"^\d+[.)]\s+(.+)$", line)
+            if line.startswith("- ") or ordered:
+                tag = "ol" if ordered else "ul"
+                if li and list_tag[0] != tag:
+                    flush()
+                if not li:
+                    list_tag[0] = tag
+                li.append(ordered.group(1) if ordered else line[2:])
                 continue
             flush()
-            if line.startswith("## "):
-                out.append("<h3>%s</h3>" % inline(line[3:]))
+            heading = re.match(r"^(#{1,6})\s+(.+)$", line)
+            if heading:
+                tag = "h3" if len(heading.group(1)) <= 2 else "h4"
+                out.append("<%s>%s</%s>" % (tag, inline(heading.group(2)), tag))
             elif line:
                 if qa and line.startswith("— "):
                     out.append('<p class="qa-question"><b>%s</b></p>' % inline(line))

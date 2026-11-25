@@ -15,8 +15,9 @@ cover:
 
 Все три — про одно: автоматизация реальной, ежедневной боли.
 
-“Coding is largely solved.”
-— Boris Cherny, Anthropic
+> “Coding is largely solved.”
+>
+> — Boris Cherny, Anthropic
 
 AI убрал барьер на создание продукта.
 Но не убрал барьер на понимание проблемы.
@@ -25,6 +26,6 @@ AI убрал барьер на создание продукта.
 
 Поэтому на хакатон AI Business SPb мы приглашаем не только разработчиков, но и специалистов с отраслевой экспертизой.
 
-**🗓** 17–18 апреля 2026, Санкт-Петербург
-**🔗** Подавайте заявку до 31 марта: [ai-business-spb.ru](http://ai-business-spb.ru/)
+17–18 апреля 2026, Санкт-Петербург
+Подавайте заявку до 31 марта: [ai-business-spb.ru](http://ai-business-spb.ru/)
 Следите за новостями: [@ai_business_spb](https://t.me/ai_business_spb)
