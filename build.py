@@ -8,7 +8,7 @@ import re
 import struct
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SIZES = {"мини": "mini", "mini": "mini", "средняя": "medium", "medium": "medium", "большая": "large", "large": "large", "статья": "large"}
+SIZES = {"мини": "mini", "mini": "mini", "s": "mini", "средняя": "medium", "medium": "medium", "m": "medium", "большая": "large", "large": "large", "l": "large", "статья": "large", "xl": "xl", "панорамная": "xl"}
 IMAGE_LINE = re.compile(r"^!\[([^\]]*)\]\(([^)]+)\)$")
 
 
