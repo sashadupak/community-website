@@ -1,19 +1,14 @@
 ---
 title: Парадокс хакатонов, который, кажется, никогда не теряет актуальности 😄
-date: 2026-09-21
+date: 2026-08-04
 size: мини
 accent: нет
 author: Редакция AI Business SPb
 format: Аналитика
 topic: Хакатоны
-cover:
+cover: assets/posts/hackathon-paradox/telegram-01.jpg
 ---
 
-Текст материала — заглушка. Замените этот файл настоящим текстом и запустите `python3 build.py`.
+Как вы это объясните?
 
-## Подзаголовок
-
-Поддерживаются абзацы, заголовки второго уровня, списки, **жирный текст** и [ссылки](https://t.me/ai_business_spb).
-
-- первый пункт
-- второй пункт
+![](assets/posts/hackathon-paradox/telegram-01.jpg)

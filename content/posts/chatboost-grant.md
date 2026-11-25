@@ -10,6 +10,7 @@ topic: Стартапы
 cover: assets/posts/chatboost-grant/cover.png
 ---
 
+
 ## Пять хакатонов, первый пилот и перезапуск ChatBoost
 
 Хотим поделиться историей одного из участников сообщества AI Business SPb — Сергея Стаценко, основателя Chatboost:
@@ -64,3 +65,21 @@ cover: assets/posts/chatboost-grant/cover.png
 
 ChatBoost – это умная система на базе передовых ИИ-моделей (GPT), которая работает как полноценный сотрудник прямо в вашей CRM, выполняя задачи первой линии продаж и поддержки.
 Сайт: chatboost.ru
+
+![](assets/posts/chatboost-grant/telegram-01.jpg)
+
+![](assets/posts/chatboost-grant/telegram-02.jpg)
+
+![](assets/posts/chatboost-grant/telegram-03.jpg)
+
+![](assets/posts/chatboost-grant/telegram-04.jpg)
+
+![](assets/posts/chatboost-grant/telegram-05.jpg)
+
+![](assets/posts/chatboost-grant/telegram-06.jpg)
+
+![](assets/posts/chatboost-grant/telegram-07.jpg)
+
+![](assets/posts/chatboost-grant/telegram-08.jpg)
+
+![](assets/posts/chatboost-grant/telegram-09.jpg)
