@@ -203,3 +203,70 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
 .partner-logo{justify-content:center}
 .partner-logo.it-dialog-partner{min-height:81px}
 .partner-logo.it-dialog-partner img{max-width:270px;max-height:81px}
+
+
+/* Partner logos, headings and copy share a consistent center axis and baseline. */
+.tiles3 .tile{display:flex;flex-direction:column;align-items:center;text-align:center}
+.tiles3 .partner-logo{width:100%;height:81px;min-height:81px;flex:0 0 81px;justify-content:center;margin-bottom:12px}
+.tiles3 .partner-logo img{max-height:54px}
+.tiles3 .partner-logo.it-dialog-partner img{max-height:81px}
+.tiles3 .tile h3{display:flex;align-items:center;justify-content:center;min-height:3.1em;margin:8px 0 10px}
+.tiles3 .tile p{width:100%}
+.tiles3 .tile>.tag{align-self:center}
+
+/* Compact mobile presentation: stacked structure, finger-friendly horizontal rails for long lists. */
+@media(max-width:800px){
+  .wrap{padding-left:18px;padding-right:18px}
+  body{font-size:15px;line-height:1.55}
+  header{padding-top:18px}
+  .brand{font-size:clamp(25px,8vw,32px)}
+  .sub{font-size:12px;padding:0 10px}
+  nav{gap:24px;margin-top:10px}
+  nav a{font-size:13px}
+  .lead{font-size:20px;line-height:1.35;margin:32px 0 14px}
+  .lead.s{font-size:18px;margin:30px 0 24px}
+  .sh{align-items:center;gap:8px;flex-wrap:wrap;margin-top:46px;padding-top:12px}
+  .sh h2{font-size:22px}
+  .sh .k{font-size:10px}
+  .sh a{font-size:12px}
+  .d{font-size:14px;line-height:1.5}
+  .split>*{min-width:0}
+  .split>.lead-story{width:100%;max-width:100%;min-width:0}
+  #home .card .cta{display:inline-flex;align-self:flex-start;max-width:100%;white-space:normal}
+  .card{padding:18px}
+  .card h3{font-size:18px}
+  .gal{grid-template-columns:1fr;gap:0}
+  .gal img:not(:first-child){display:none}
+  .join{width:100%;min-width:0;align-items:stretch;gap:16px;padding:20px}
+  .join>div{width:100%;min-width:0}
+  .join h3{font-size:20px}
+  .join p{font-size:14px}
+  .join .jo{width:100%;min-width:0}
+  .join .jo .tg{width:100%;box-sizing:border-box;justify-content:center}
+  .ft{padding:28px 18px 32px;font-size:12px;gap:18px}
+  .ft h4{font-size:14px}
+  .ft li{font-size:12px}
+  .bk{padding:26px 0 44px}
+  .bk>h2{font-size:clamp(22px,6vw,26px)}
+  .tile{padding:18px}
+  .tile h3{font-size:19px}
+  .tile p{font-size:14px}
+  .q p{font-size:16px}
+  .q{padding:18px}
+  .stat b{font-size:60px}
+  .tag,.badge{font-size:11px}
+  .feed .card.s-mini h3{font-size:16px}
+  .feed .card.s-medium h3{font-size:18px}
+  .feed .card.s-large h3{font-size:21px}
+  .rating-photo img{width:calc(100% - 24px);margin:12px auto 0}
+  .brief{display:flex;gap:10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-left:2px;padding:2px 2px 12px;margin-top:10px}
+  .brief li,.brief li:first-child{flex:0 0 min(78vw,300px);border:1px solid var(--sage);border-radius:6px;padding:12px;scroll-snap-align:start}
+  .brief button{display:block;width:100%;height:100%;padding:0;line-height:1.4}
+  .brief button::before{display:block;margin-bottom:6px;font-family:var(--fm)}
+  .ev{display:flex;gap:10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:2px 2px 12px;border-top:0}
+  .ev button{display:flex;flex:0 0 min(78vw,300px);flex-direction:column;align-items:flex-start;gap:8px;width:auto;padding:12px;border:1px solid var(--sage);border-radius:6px;scroll-snap-align:start;box-sizing:border-box}
+  .tiles{display:flex;grid-template-columns:none;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-left:2px;padding:2px 2px 14px;margin-right:-18px}
+  .tiles>.tile{flex:0 0 min(82vw,330px);scroll-snap-align:start}
+  .qs,.qs4{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-left:2px;padding:2px 2px 14px;margin-right:-18px}
+  .qs>.q,.qs4>.q{flex:0 0 min(82vw,330px);scroll-snap-align:start}
+}
