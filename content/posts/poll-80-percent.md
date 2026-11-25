@@ -7,6 +7,7 @@ author: Редакция AI Business SPb
 format: Опрос
 topic: Автоматизация
 cover:
+draft: true
 ---
 
 Результаты опроса:

@@ -29,7 +29,7 @@ function pic(c,alt,owner){return c?'<img class="cv" data-optional-image src="'+a
 function articleBody(p){var box=document.createElement("div");box.innerHTML=p.body||"";box.querySelectorAll(".article-image").forEach(function(image){image.remove()});return box.innerHTML}
 function openP(slug,from){var p=PS.filter(function(x){return x.slug==slug})[0];if(!p)return;
 var title='<h2 class="serif">'+esc(p.title)+'</h2>',tags=tg(p),heading=p.slug=="hackathon-product-start"?title+tags:tags+title;
-show('<span class="dt">'+dt(p.date)+'</span>'+(from=="home"?'<button class="back" data-back>← Назад</button>':'')+pic(p.cover,p.title,p)+heading+'<div class="body">'+articleBody(p)+'</div>'+(p.author?'<p class="k">Автор: '+esc(p.author)+'</p>':''))}
+show('<span class="dt">'+dt(p.date)+'</span>'+(from=="home"?'<button class="back" data-back>← Назад</button>':'')+pic(p.cover,p.title,p)+heading+'<div class="body article-body">'+articleBody(p)+'</div>'+(p.author?'<p class="k">Автор: '+esc(p.author)+'</p>':''))}
 function openC(slug){var c=CS.filter(function(x){return x.slug==slug})[0];if(!c)return;
 var logo=c.logo?'<span class="case-logo optional-image-group"><img data-optional-image src="'+attr(assetPath(c.logo))+'" alt="Логотип '+attr(c.company)+'" loading="lazy"></span>':'';
 var photo=c.cover?'<figure class="case-detail-photo"><img data-optional-image src="'+attr(assetPath(c.cover))+'"'+imgDims(c)+' alt="Фото кейса '+attr(c.company)+'" loading="lazy"><figcaption>Презентация разработанного решения по кейсу компании на хакатоне.</figcaption></figure>':'';

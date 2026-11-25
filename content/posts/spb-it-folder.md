@@ -7,6 +7,7 @@ author: Редакция AI Business SPb
 format: Обзор
 topic: Хакатоны
 cover:
+draft: true
 ---
 
 Собрали в одну папку живые чаты и каналы питерской IT/AI-тусовки:

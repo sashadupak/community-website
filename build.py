@@ -150,6 +150,9 @@ for path in glob.glob(os.path.join(ROOT, "content/posts/*.md")):
         continue
     slug = os.path.basename(path)[:-3]
     cover = first_article_image(text) or meta.get("cover") or "assets/posts/%s/cover.jpg" % slug
+    if cover and not re.match(r"^(https?:|data:)", cover, re.I):
+        if not os.path.isfile(os.path.join(ROOT, cover.lstrip("/"))):
+            cover = ""
     cover_width, cover_height = image_dimensions(cover)
     article_text = without_article_images(text)
     posts.append(dict(
