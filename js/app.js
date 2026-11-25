@@ -20,26 +20,7 @@ $("brief").innerHTML=PS.filter(function(p){return p!==feat}).slice(0,6).map(func
 $("ev").innerHTML=PS.filter(function(p){return p.kind=="event"}).slice(0,5).map(function(p){return '<button data-post="'+attr(p.slug)+'" data-from="home"><time>'+dt(p.date)+'</time><span>'+esc(p.title)+'</span><span>→</span></button>'}).join("");
 // кейсы хакатона
 $("cases").innerHTML=CS.map(function(c){return '<button class="tile case-card" data-case="'+attr(c.slug)+'">'+(c.logo?'<span class="case-logo optional-image-group"><img data-optional-image src="'+attr(assetPath(c.logo))+'" alt="Логотип '+attr(c.company)+'" loading="lazy"></span>':'')+'<h3 class="serif">'+esc(c.title)+'</h3><p>'+esc(c.summary)+'</p>'+c.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span> '}).join("")+'</button>'}).join("");
-// Masonry раскладывает карточки по минимальной высоте занятых колонок, сохраняя естественную высоту изображений.
-function applyFeedMasonry(){
-  var feed=$("feed"),cards=Array.prototype.slice.call(feed.querySelectorAll(".card.s-mini,.card.s-medium,.card.s-large")),community=feed.querySelector(".feed-community"),rows=layoutRows(feedPosts),items=[];
-  rows.forEach(function(row){row.forEach(function(item){items.push(item)})});
-  feed.classList.remove("masonry");
-  cards.forEach(function(el,i){el.style.gridColumn="span "+items[i].s;el.style.gridRow=""});
-  if(community)community.style.gridRow="";
-  if(!feed.getClientRects().length)return;
-  if(window.innerWidth<=800)return;
-  var heights=cards.map(function(el){return Math.ceil(el.getBoundingClientRect().height)}),communityHeight=community?Math.ceil(community.getBoundingClientRect().height):0;
-  var layout=layoutMasonry(rows,heights,12,24,4);
-  layout.placements.forEach(function(place,i){cards[i].style.gridColumn=place.start+" / span "+place.span;cards[i].style.gridRow=place.row+" / span "+place.rowSpan});
-  if(community){community.style.gridColumn="1 / -1";community.style.gridRow=(layout.bottom+1)+" / span "+Math.max(1,Math.ceil(communityHeight/4))}
-  feed.classList.add("masonry");
-}
-var feedLayoutFrame=0;
-function scheduleFeedMasonry(){if(feedLayoutFrame)return;feedLayoutFrame=requestAnimationFrame(function(){feedLayoutFrame=0;applyFeedMasonry()})}
-$("feed").addEventListener("load",function(e){if(e.target.classList&&e.target.classList.contains("feed-image"))scheduleFeedMasonry()},true);
-$("feed").addEventListener("error",function(e){if(e.target.classList&&e.target.classList.contains("feed-image"))scheduleFeedMasonry()},true);
-window.addEventListener("resize",function(){scheduleFeedMasonry()});
+// CSS Grid packs the feed row by row; row heights follow card content instead of leaving masonry holes.
 // оверлей
 function show(html){lastF=document.activeElement;mod.innerHTML='<button class="x" aria-label="Закрыть">×</button>'+html;watchOptionalImages(mod);ov.classList.add("on");document.body.style.overflow="hidden";mod.querySelector(".x").focus()}
 function pic(c,alt,owner){return c?'<img class="cv" data-optional-image src="'+attr(assetPath(c))+'"'+imgDims(owner)+' alt="'+attr(alt||"")+'" loading="lazy">':''}
@@ -64,8 +45,7 @@ function route(){var h=location.hash.slice(1),pg=(h=="materials"||h=="programs")
 sy[cur]=window.scrollY;cur=pg;
 document.querySelectorAll(".pg").forEach(function(e){e.classList.toggle("on",e.id==pg)});
 document.querySelectorAll("nav a").forEach(function(a){a.classList.toggle("on",a.dataset.p==(pg=="programs"?"home":pg))});
-if(pg==="materials")scheduleFeedMasonry();
-window.scrollTo(0,pg=="programs"?0:(sy[pg]||0))}
-watchOptionalImages(document);applyFeedMasonry();
+window.scrollTo(0,pg==="programs"?0:(sy[pg]||0))}
+watchOptionalImages(document);
 window.addEventListener("hashchange",route);route();
 })();
