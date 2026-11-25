@@ -5,6 +5,7 @@ import html
 import json
 import os
 import re
+import struct
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SIZES = {"мини": "mini", "mini": "mini", "средняя": "medium", "medium": "medium", "большая": "large", "large": "large", "статья": "large"}
@@ -68,19 +69,66 @@ def frontmatter(path):
     return meta, match.group(2)
 
 
+def image_dimensions(source):
+    if not source or re.match(r"^(https?:|data:|/)", source, re.I):
+        return None, None
+    path = os.path.join(ROOT, source)
+    if not os.path.isfile(path):
+        return None, None
+    try:
+        with open(path, "rb") as image:
+            header = image.read(24)
+            if header[:8] == b"\x89PNG\r\n\x1a\n":
+                return struct.unpack(">II", header[16:24])
+            if header[:2] != b"\xff\xd8":
+                return None, None
+            image.seek(2)
+            frame_markers = {0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7,
+                             0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF}
+            while True:
+                prefix = image.read(1)
+                if not prefix:
+                    break
+                if prefix != b"\xff":
+                    continue
+                marker = image.read(1)
+                while marker == b"\xff":
+                    marker = image.read(1)
+                if not marker or marker in (b"\xd8", b"\xd9", b"\x00"):
+                    continue
+                length = image.read(2)
+                if len(length) != 2:
+                    break
+                segment_length = struct.unpack(">H", length)[0]
+                if segment_length < 2:
+                    break
+                if marker[0] in frame_markers:
+                    frame = image.read(5)
+                    if len(frame) == 5:
+                        height, width = struct.unpack(">HH", frame[1:5])
+                        return width, height
+                    break
+                image.seek(segment_length - 2, os.SEEK_CUR)
+    except (OSError, struct.error):
+        pass
+    return None, None
+
+
 posts = []
 for path in glob.glob(os.path.join(ROOT, "content/posts/*.md")):
     meta, text = frontmatter(path)
     if meta.get("draft", "").lower() in ("true", "yes", "да", "1"):
         continue
     slug = os.path.basename(path)[:-3]
+    cover = meta.get("cover") or "assets/posts/%s/cover.jpg" % slug
+    cover_width, cover_height = image_dimensions(cover)
     posts.append(dict(
         slug=slug, title=meta["title"], date=meta["date"],
         accent=meta.get("accent", "").lower() in ("true", "да", "yes", "1"),
         size=SIZES.get(meta.get("size", "мини").lower(), "mini"), kind=meta.get("kind", ""),
         featured=meta.get("featured") == "true", note=meta.get("note", ""), author=meta.get("author", ""),
         fmt=meta.get("format", ""), topic=meta.get("topic", ""),
-        cover=meta.get("cover") or "assets/posts/%s/cover.jpg" % slug,
+        cover=cover, cover_width=cover_width, cover_height=cover_height,
         body=md(text, qa=meta.get("format", "").lower().startswith("q&a"))))
 posts.sort(key=lambda post: post["date"], reverse=True)
 with open(os.path.join(ROOT, "js/posts.js"), "w", encoding="utf-8") as output:
@@ -91,12 +139,14 @@ cases = []
 for path in glob.glob(os.path.join(ROOT, "content/cases/*.md")):
     meta, text = frontmatter(path)
     slug = os.path.basename(path)[:-3]
+    cover = meta.get("cover") or "assets/hackathon/cases/%s.jpg" % slug
+    cover_width, cover_height = image_dimensions(cover)
     cases.append(dict(
         slug=slug, company=meta["company"], title=meta["title"], summary=meta["summary"],
         tags=[tag.strip() for tag in meta.get("tags", "").split(",") if tag.strip()],
         order=int(meta.get("order") or 99),
         logo=meta.get("logo") or "assets/logos/%s.png" % slug,
-        cover=meta.get("cover") or "assets/hackathon/cases/%s.jpg" % slug, body=md(text)))
+        cover=cover, cover_width=cover_width, cover_height=cover_height, body=md(text)))
 cases.sort(key=lambda case: case["order"])
 with open(os.path.join(ROOT, "js/cases.js"), "w", encoding="utf-8") as output:
     output.write("window.CASES=" + json.dumps(cases, ensure_ascii=False) + ";\n")
