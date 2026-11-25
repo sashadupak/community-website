@@ -65,11 +65,12 @@ function layoutMasonry(rows,heights,columns,gap){
   rows.forEach(function(row){row.forEach(function(item){
     var span=Math.min(columns,item.s),height=Math.max(1,Math.ceil((heights[index]||180)/step)),options=[];
     for(var start=0;start<=columns-span;start++){
-      var top=0;
+      var top=0,waste=0;
       for(var col=start;col<start+span;col++)top=Math.max(top,bottoms[col]);
-      options.push({start:start,top:top});
+      for(var col=start;col<start+span;col++)waste+=top-bottoms[col];
+      options.push({start:start,top:top,waste:waste,score:top+waste});
     }
-    options.sort(function(a,b){return a.top-b.top||a.start-b.start;});
+    options.sort(function(a,b){return a.score-b.score||a.top-b.top||a.start-b.start;});
     var choice=null;
     for(var i=0;i<options.length;i++){
       if(item.p.size!=="large"||largeStarts.indexOf(options[i].top)<0){choice=options[i];break;}

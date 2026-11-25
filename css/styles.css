@@ -270,3 +270,9 @@ button.rec{width:100%;text-align:left;background:none;border:0;border-top:1px so
   .qs,.qs4{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-left:2px;padding:2px 2px 14px;margin-right:-18px}
   .qs>.q,.qs4>.q{flex:0 0 min(82vw,330px);scroll-snap-align:start}
 }
+
+
+/* Keep article covers proportional and naturally sized instead of stretching them to fill the dialog. */
+.mod img.cv{display:block;width:auto;max-width:100%;height:auto;max-height:560px;object-fit:contain;margin:0 auto 18px}
+/* Natural content height prevents blank interiors and lets masonry pack text-only cards tightly. */
+.feed .card.s-mini,.feed .card.s-medium,.feed .card.s-large{min-height:0}
